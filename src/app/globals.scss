@@ -1,0 +1,92 @@
+@import url("https://fonts.cdnfonts.com/css/adobe-clean");
+
+$primary: #1f6fff;
+
+:root {
+  --mui-palette-primary-main: $primary;
+  --mui-palette-primary-dark: $primary;
+  --mui-palette-primary-contrastText: #fff;
+}
+
+body,
+button {
+  font-family: "Adobe Clean", sans-serif !important;
+  text-transform: none !important;
+  font-size: 16px !important;
+}
+
+button {
+  font-weight: bold !important;
+
+  &.info {
+    &:disabled {
+      opacity: 0.15 !important;
+    }
+  }
+}
+
+h1 {
+  font-size: 32px;
+  margin: 0;
+}
+
+h2 {
+  margin: 0;
+}
+
+p {
+  margin: 0px;
+  color: #aaa;
+}
+
+.MuiCard-root {
+  p {
+    margin-bottom: 12px;
+  }
+}
+
+.border {
+  border: 2px solid #eee !important;
+  border-radius: 12px;
+}
+
+.Landing {
+  h1 {
+    font-size: 48px;
+    margin: 8px 0;
+    text-align: center;
+  }
+  p {
+    font-size: 24px;
+    text-align: center;
+  }
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.primary {
+  fill: $primary;
+}
+
+.opacity {
+  &-1,
+  &-2 {
+    opacity: 0.25;
+  }
+  &-3,
+  &-4,
+  &-5,
+  &-6 {
+    opacity: 0.5;
+  }
+  &-7,
+  &-8,
+  &-9 {
+    opacity: 0.8;
+  }
+  &-10 {
+    opacity: 1;
+  }
+}

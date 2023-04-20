@@ -13,10 +13,11 @@ export const AuthContextProvider = ({ children, switchTheme }) => {
   const onAuthStateChange = async () => {
     try {
       const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      if (user) {
-        setUser(user);
+        data: { session },
+      } = await supabase.auth.getSession();
+
+      if (session && session.user) {
+        setUser(session.user);
       }
     } catch (error) {
       console.log(error);

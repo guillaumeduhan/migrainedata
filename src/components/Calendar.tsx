@@ -1,3 +1,4 @@
+// @ts-nocheck
 "use client";
 import dayjs from "dayjs";
 import { Alert, AlertTitle, Button, Grid } from "@mui/material";

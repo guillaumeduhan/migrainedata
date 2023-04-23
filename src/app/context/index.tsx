@@ -1,14 +1,35 @@
 "use client";
 
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+  ReactNode,
+} from "react";
 import supabase from "../../../supabase";
 import Landing from "@/components/Landing";
 import Header from "@/components/Header";
 
-const AuthContext = createContext({});
+interface AuthContextType {
+  user: any;
+  signOut: () => Promise<void>;
+}
 
-export const AuthContextProvider = ({ children, switchTheme }) => {
-  const [user, setUser] = useState(false);
+const AuthContext = createContext<AuthContextType>({
+  user: null,
+  signOut: async () => {},
+});
+
+export const AuthContextProvider = ({
+  children,
+  switchTheme,
+}: {
+  children: ReactNode;
+  switchTheme: any;
+}) => {
+  const [user, setUser] = useState<any>(false);
 
   const onAuthStateChange = async () => {
     try {
@@ -21,7 +42,6 @@ export const AuthContextProvider = ({ children, switchTheme }) => {
       }
     } catch (error) {
       console.log(error);
-    } finally {
     }
   };
 

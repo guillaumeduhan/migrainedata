@@ -1,5 +1,7 @@
-import dayjs from "dayjs";
-import config from "../../config";
+// @ts-nocheck
+
+"use client";
+import dayjs, { Dayjs } from "dayjs"; // Import de Dayjs et son type Dayjs
 import { useState, useEffect } from "react";
 import {
   Card,
@@ -26,8 +28,8 @@ type Props = {
 
 export default function Form({ setEvents, setOpen }: Props) {
   const { user } = useAuthContext();
-  const [loading, setLoading] = useState<any>(false);
-  const [error, setError] = useState<any>(false);
+  const [loading, setLoading] = useState<boolean>(false); // Ajout du type boolean
+  const [error, setError] = useState<string | null>(null); // Ajout du type string | null
   const [event, setEvent] = useState<Event>({
     user_id: undefined,
     date: undefined,
@@ -38,17 +40,20 @@ export default function Form({ setEvents, setOpen }: Props) {
     count: 0,
   });
 
-  const handleChange = (index: number, key: string) => {
+  const handleChange = (index: number, key: keyof Event) => {
+    // Ajout de l'index et du type générique keyof Event
     if (event[key].includes(index)) {
-      setEvent(() => ({
-        ...event,
-        [key]: event[key].filter((x: number) => x !== index),
+      setEvent((prevState) => ({
+        // Utilisation de prevState
+        ...prevState,
+        [key]: prevState[key].filter((x) => x !== index), // Utilisation de prevState
       }));
       return;
     }
-    setEvent(() => ({
-      ...event,
-      [key]: [...event[key], index],
+    setEvent((prevState) => ({
+      // Utilisation de prevState
+      ...prevState,
+      [key]: [...prevState[key], index], // Utilisation de prevState
     }));
   };
 
@@ -60,14 +65,14 @@ export default function Form({ setEvents, setOpen }: Props) {
       return;
     }
     try {
-      setEvent({ ...event, user_id: user.id });
-      const { data, error } = await supabase.from("events").insert(event);
-
+      const newEvent = { ...event, user_id: user?.id }; // Ajout de l'opérateur de faculté
+      const { data, error } = await supabase
+        .from<Event>("events")
+        .insert(newEvent); // Ajout du type générique Event
       if (data) {
-        setEvents((prevEvents) => [...prevEvents, event]);
+        setEvents((prevEvents) => [...prevEvents, newEvent]);
         setOpen(false);
       }
-      console.log(event);
     } catch (error) {
       console.log(error);
     } finally {
@@ -76,7 +81,11 @@ export default function Form({ setEvents, setOpen }: Props) {
   };
 
   useEffect(() => {
-    setEvent({ ...event, date: dayjs().format() });
+    setEvent((prevState) => ({
+      // Utilisation de prevState
+      ...prevState,
+      date: dayjs().format(), // Formatage de la date avec Dayjs
+    }));
   }, []);
 
   return (

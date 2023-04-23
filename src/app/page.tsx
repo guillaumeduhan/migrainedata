@@ -11,7 +11,7 @@ import supabase from "../../supabase";
 
 export default function Home() {
   const { user } = useAuthContext();
-  const [events, setEvents] = useState<Array<Event>>([]);
+  const [events, setEvents] = useState<Event[]>([]);
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -21,9 +21,9 @@ export default function Home() {
       let { data, error } = await supabase
         .from("events")
         .select("*")
-        .eq("user_id", user.id);
+        .eq("user_id", user?.id);
 
-      if (events) {
+      if (data) {
         setEvents(data);
       }
     } catch (error) {
@@ -35,14 +35,14 @@ export default function Home() {
 
   useEffect(() => {
     fetchEvents();
-  }, []);
+  }, [user]);
 
   return (
     <Container>
-      <Grid>
+      <Grid container>
         <UserHeader />
       </Grid>
-      <Grid>
+      <Grid container>
         {!open && <Calendar events={events} setOpen={setOpen} />}
         {open && <Form setEvents={setEvents} setOpen={setOpen} />}
       </Grid>

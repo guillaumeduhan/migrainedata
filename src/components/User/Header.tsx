@@ -5,12 +5,14 @@ import { Button, Grid } from "@mui/material";
 import AvatarComponent from "../Avatar";
 import { useAuthContext } from "@/app/context";
 import { useRouter } from "next/navigation";
+import supabase from "../../../supabase";
+supabase;
 
 export default function UserHeader() {
   const router = useRouter();
-  const { user, signOut } = useAuthContext();
+  const { user } = useAuthContext();
   const logout = () => {
-    signOut();
+    supabase.auth.signOut();
     router.push("/");
   };
   return (

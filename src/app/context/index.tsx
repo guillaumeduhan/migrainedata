@@ -14,12 +14,10 @@ import Header from "@/components/Header";
 
 interface AuthContextType {
   user: any;
-  signOut: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType>({
   user: null,
-  signOut: async () => {},
 });
 
 export const AuthContextProvider = ({
@@ -52,7 +50,6 @@ export const AuthContextProvider = ({
   const value = useMemo(() => {
     return {
       user,
-      signOut: () => supabase.auth.signOut(),
     };
   }, [user]);
 
@@ -65,6 +62,6 @@ export const AuthContextProvider = ({
 };
 
 export const useAuthContext = () => {
-  const { user, signOut } = useContext(AuthContext);
-  return { user, signOut };
+  const { user } = useContext(AuthContext);
+  return { user };
 };
